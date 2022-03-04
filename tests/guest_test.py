@@ -17,3 +17,8 @@ class TestGuest(unittest.TestCase):
 
     def test_guest_has_favourite_song(self):
         self.assertEqual("Ace's high", self.guest.favourite_song)
+
+    def test_pay_for_karaoke(self):
+        self.guest.pay_for_karaoke(10)
+        self.assertEqual(40, self.guest.cash)
+

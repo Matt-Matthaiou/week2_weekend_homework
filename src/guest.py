@@ -5,3 +5,6 @@ class Guest:
         self.age = age
         self.cash = cash
         self.favourite_song = favourite_song
+
+    def pay_for_karaoke(self, amount):
+        self.cash -= amount
