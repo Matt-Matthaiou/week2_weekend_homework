@@ -11,6 +11,8 @@ class Room:
             self.current_guests.append(guest)
             guest.pay_for_karaoke(10)
             self.add_money_to_till(10)
+            if guest.favourite_song in self.song_list:
+                return "Whooooo!!"
         else:
             return "Sorry we are full"
 
