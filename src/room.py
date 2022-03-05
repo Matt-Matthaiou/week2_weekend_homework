@@ -10,6 +10,7 @@ class Room:
         if len(self.current_guests) < self.capacity:
             self.current_guests.append(guest)
             guest.pay_for_karaoke(10)
+            self.add_money_to_till(10)
         else:
             return "Sorry we are full"
 
@@ -18,6 +19,9 @@ class Room:
 
     def add_song(self, song):
         self.song_list.append(song)
+
+    def add_money_to_till(self, amount):
+        self.till += amount
 
 
         

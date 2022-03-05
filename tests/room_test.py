@@ -49,4 +49,5 @@ class TestRoom(unittest.TestCase):
         self.room.check_guest_in_room(self.guest2)
         self.assertEqual(40, self.guest1.cash)
         self.assertEqual(90, self.guest2.cash)
+        self.assertEqual(30, self.room.till)
 
