@@ -16,7 +16,7 @@ class TestRoom(unittest.TestCase):
         self.room = Room(2, [self.song1, self.song2, self.song3], 10, self.bar)
         self.guest1 = Guest("Matt", 35, 50, self.song1, False)
         self.guest2 = Guest("Lemmy", 60, 100, self.song4, False)
-        self.guest3 = Guest("Argiris", 58, 10, self.song5, False)
+        self.guest3 = Guest("Argiris", 58, 20, self.song5, True)
         
 
 
@@ -73,5 +73,17 @@ class TestRoom(unittest.TestCase):
         vat_breakdown = self.room.pay_VAT_for_the_day()
         self.assertEqual(8, self.room.till)
         self.assertEqual("the vat is: 2.0 and the profit for the night is: 8.0", vat_breakdown)
-    
+
+    def test_does_guest_has_club_membership(self):
+        self.assertEqual(False, self.room.does_guest_have_club_membership(self.guest1))
+        self.assertEqual(True, self.room.does_guest_have_club_membership(self.guest3))
+
+    def test_discount_applies_to_member(self):
+        self.room.check_guest_in_room(self.guest3)
+        self.room.sell_drink_to_guest(self.guest3, "beer")
+        self.room.sell_drink_to_guest(self.guest3, "soft_drinks")
+        self.room.sell_food_to_guest(self.guest3, "burger")
+        self.room.checkout_guest(self.guest3)
+        self.assertEqual(2, self.guest3.cash)
+        self.assertEqual(28, self.room.till)
 

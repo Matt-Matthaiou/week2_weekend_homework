@@ -19,9 +19,13 @@ class Room:
             return "Sorry we are full"
 
     def checkout_guest(self, guest):
+        total_amount = self.guest_tab[guest]
+        if self.does_guest_have_club_membership(guest):
+            discount = self.guest_tab[guest] * 10 / 100
+            total_amount -= discount
         self.current_guests.remove(guest)
-        guest.pay_for_karaoke(self.guest_tab[guest])
-        self.till += self.guest_tab[guest]
+        guest.pay_for_karaoke(total_amount)
+        self.till += total_amount
         self.guest_tab.pop(guest)
 
 
@@ -46,6 +50,9 @@ class Room:
         vat = self.till * 20 / 100
         self.till = self.till - vat
         return f"the vat is: {vat} and the profit for the night is: {self.till}"
+
+    def does_guest_have_club_membership(self, guest):
+        return guest.club_membership
 
     
 

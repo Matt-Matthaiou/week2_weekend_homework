@@ -7,7 +7,7 @@ class TestBar(unittest.TestCase):
 
     def setUp(self):
         self.bar = Bar({"beer": 3, "wine": 3, "soft_drinks": 2, "spirits": 4}, {"burger": 5, "hot dog": 3, "dirty fries": 4})
-        self.guest = Guest("Matt", 35, 50, Song("whatever", 3.14))
+        self.guest = Guest("Matt", 35, 50, Song("whatever", 3.14), True)
 
     def test_bar_has_drink(self):
         self.assertEqual(4, len(self.bar.drinks))
