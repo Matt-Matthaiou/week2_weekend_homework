@@ -42,5 +42,17 @@ class Room:
         price = self.bar.sell_food(food)
         self.add_amount_to_guest_tab(guest, price)
 
+    def pay_VAT_for_the_day(self):
+        vat = self.till * 20 / 100
+        self.till = self.till - vat
+        return f"the vat is: {vat} and the profit for the night is: {self.till}"
+
+    
+
+    
+
+    
+        
+
     
         
