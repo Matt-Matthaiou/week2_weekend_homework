@@ -2,18 +2,21 @@ import unittest
 from src.room import Room
 from src.song import Song
 from src.guest import Guest
+from src.bar import Bar
 
 class TestRoom(unittest.TestCase):
 
     def setUp(self):
+        self.bar = Bar({"beer": 3, "wine": 3, "soft_drinks": 2, "spirits": 4}, {"burger": 5, "hot dog": 3, "dirty fries": 4})
         self.song1 = Song("Ace's high", 4.12)
         self.song2 = Song("Master of puppets", 5.23)
         self.song3 = Song("Azrael", 6.10)
         self.song4 = Song("Rock n roll", 2.57)
-        self.room = Room(2, [self.song1, self.song2, self.song3], 10)
+        self.room = Room(2, [self.song1, self.song2, self.song3], 10, self.bar)
         self.guest1 = Guest("Matt", 35, 50, self.song1)
         self.guest2 = Guest("Lemmy", 60, 100, self.song4)
         self.guest3 = Guest("Argiris", 58, 10, "Children of the sun")
+        
 
 
     def test_room_has_capacity(self):
@@ -48,7 +51,21 @@ class TestRoom(unittest.TestCase):
     def test_guest_charge(self):
         self.room.check_guest_in_room(self.guest1)
         self.room.check_guest_in_room(self.guest2)
-        self.assertEqual(40, self.guest1.cash)
-        self.assertEqual(90, self.guest2.cash)
-        self.assertEqual(30, self.room.till)
+        self.assertEqual(10, self.room.guest_tab[self.guest1])
+        self.assertEqual(10, self.room.guest_tab[self.guest2])
+
+    def test_sell_drink_to_customer(self):
+        self.room.check_guest_in_room(self.guest1)
+        self.room.sell_drink_to_guest(self.guest1, "beer")
+        self.room.checkout_guest(self.guest1)
+        self.assertEqual(37, self.guest1.cash)
+        self.assertEqual(23, self.room.till)
+
+    def test_sell_food_to_customer(self):
+        self.room.check_guest_in_room(self.guest1)
+        self.room.sell_food_to_guest(self.guest1, "dirty fries")
+        self.room.checkout_guest(self.guest1)
+        self.assertEqual(36, self.guest1.cash)
+        self.assertEqual(24, self.room.till)
+    
 
